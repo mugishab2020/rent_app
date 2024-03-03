@@ -3,11 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, Boolean, Float, DateTime, Column
 #from sqlalchemy import Column
 
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://mugishab2020:edsonb@2023@localhost/mydatabase' 
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
 db = SQLAlchemy()
 
 class User(db.Model):
