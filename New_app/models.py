@@ -5,7 +5,7 @@ from sqlalchemy import Integer, String, Boolean, Float, DateTime, Column
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://database:mugishab2020@localhost/mydatabase' 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://mugishab2020:edsonb@2023@localhost/mydatabase' 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy()
