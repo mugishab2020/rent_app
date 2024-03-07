@@ -1,9 +1,18 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request,render_template
 from datetime import date
-from models import db, Car, User
+from models import db
+from models import Car, User
 #, Client, RentedCar
 
 bp = Blueprint('routes', __name__)
+@bp.route('/')
+def home():
+    return 'This is the home page of the app'
+
+
+@bp.route('/login')
+def login():
+    return 'This is the home page of the app'
 
 @bp.route('/cars', methods=['POST','GET'])
 def get_cars():
