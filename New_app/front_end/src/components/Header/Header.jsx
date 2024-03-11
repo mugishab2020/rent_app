@@ -15,17 +15,18 @@ const navLinks = [
   },
   {
     path: "/cars",
-    display: "Cars available",
+    display: "Cars",
   },
 
   {
     path: "/orders",
-    display: "Your Orders",
+    display: "Orders",
   },
   {
     path: "/contact",
     display: "Contact",
   },
+  
 ];
 
 const Header = () => {
@@ -55,17 +56,6 @@ const Header = () => {
              
             </Col>
 
-            <Col lg="6" md="6" sm="6">
-              <div className="header__top__right d-flex justify-content-end gap-3">
-                <Link to="#" className=" d-flex align-items-center gap-1">
-                  <i class="ri-login-circle-line"></i> Login
-                </Link>
-
-                <Link to="#" className=" d-flex align-items-center gap-1">
-                  <i class="ri-user-line"></i> Register
-                </Link>
-              </div>
-            </Col>
           </Row>
         </Container>
       </div>
@@ -147,7 +137,17 @@ const Header = () => {
                 <span>
                   <i class="ri-search-line"></i>
                 </span>
+                
               </div>
+              <Col lg="6" md="6" sm="6">
+              <div className="header__top__right d-flex">
+                <Link to="/login" className=" d-flex align-items-center">
+                  <i class="ri-login-circle-line"></i> Login
+                </Link>
+
+                
+              </div>
+            </Col>
             </div>
           </div>
         </Container>
