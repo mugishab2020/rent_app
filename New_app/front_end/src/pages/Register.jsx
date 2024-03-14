@@ -1,34 +1,103 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "../styles/register.css"
 
 const Register = () => {
+
+  const [state, setState] = useState({
+    email: '',
+    username: '',
+    password: '',
+    confirmpasswords: '',
+    gender: ''
+
+
+  })
+
+  const handleSignUp= ()=> {
+    if (state.password !== state.confirmpasswords){
+      alert('Password missmatch');
+      return;
+    }
+      fetch('/signup', {
+        method:'POST'
+      })
+  }
   return (
      <div className='register_body'>
-       <form action="">
+       <form>
         <h1>Register</h1>
         <div className="inputbox">
-          <input type="text" placeholder='Email' required />
+          <input type="email"
+           placeholder='Email' 
+           required 
+           value={state.email}
+           onChange={(e)=> {
+            setState({
+              ...state,
+              email: e.target.value
+            })
+           }}
+            />
           </div>
           <div className='inputbox'>
-          <input type="text" placeholder='Username' required />
+          <input type="text" 
+          placeholder='Username' 
+          required 
+          value={state.username}
+          onChange={(e)=> {
+            setState({
+              ...state,
+              username: e.target.value
+            })
+          }}/>
           </div>
           <div className='inputbox'>
-          <input type="password" placeholder='Password' required />
+         <input type="password" placeholder='Password' required
+           value={state.password}
+           onChange={(e)=> {
+             setState({
+               ...state,
+               password: e.target.value
+             })
+           }}/>
           </div>
           <div className='inputbox'>
-          <input type="password" placeholder='Retype Password' required />
+          <input type="password"
+          placeholder='Retype Password'
+          value={state.confirmpasswords}
+           onChange={(e)=> {
+             setState({
+               ...state,
+               confirmpasswords: e.target.value
+             })
+           }} 
+          required />
           </div>
-          <div className="input">
+          <div classtextName="input">
           <label>
-            <input type="radio" name="gender" value="male" checked/>Male
+            <input type="radio" name="gender" checked
+            value={state.gender}
+            onChange={(e)=> {
+              setState({
+                ...state,
+                gender: e.target.value
+              })
+            }}/>Male
           </label>
           <label>
-            <input type="radio" name="gender" value="female"/>Female
+            <input type="radio" name="gender" 
+              value={state.gender}
+              onChange={(e)=> {
+                setState({
+                  ...state,
+                  gender: e.target.value
+                })
+              }}/>Female
           </label>
           </div>
     
 
-        <button className='button' type='submit'>Register</button>
+        <button className='button' type='submit' onClick={()=> handleSignUp()}>Register</button>
         
 
        </form>

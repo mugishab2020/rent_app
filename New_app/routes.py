@@ -1,18 +1,36 @@
 from flask import Blueprint, jsonify, request,render_template
+from flask_bcrypt import Bcrypt
 from datetime import date
 from models import db
 from models import Car, User
-#, Client, RentedCar
-
 bp = Blueprint('routes', __name__)
+
 @bp.route('/')
 def home():
     return 'This is the home page of the app'
 
 
-@bp.route('/login')
-def login():
-    return 'This is the home page of the app'
+@bp.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    username = data.get('username')
+    email = data.get('email')
+    password = data.get('password')
+    gender = data.get('gender')
+
+    # Validate user input (e.g., check for required fields, validate email format)
+
+    # Hash the password
+    hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
+
+    # Create a new user object
+    new_user = User(username=username, email=email, password=hashed_password, gender=gender)
+
+    # Add the user to the database
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({'message': 'User registered successfully'})
 
 @bp.route('/cars', methods=['POST','GET'])
 def get_cars():

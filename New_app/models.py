@@ -9,7 +9,7 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    role = db.Column(db.String(20), nullable=False)
+    gender = db.Column(db.String(8), nullable=False)
     orders = db.relationship('Order', backref='User', lazy=True)
     payments = db.relationship('Payment', backref='User', lazy=True)
 
