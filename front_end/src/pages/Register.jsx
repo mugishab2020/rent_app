@@ -18,9 +18,26 @@ const Register = () => {
       alert('Password missmatch');
       return;
     }
-      fetch('http://localhost:5000/register', {
-        method:'POST'
-      })
+      
+  fetch('http://localhost:5000/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json' // Specify content type as JSON
+    },
+    body: JSON.stringify(state) // Convert form data to JSON string
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    // Handle successful registration here
+    console.log('User registered successfully');
+  })
+  .catch(error => {
+    console.error('There was a problem with the registration:', error);
+    // Handle registration error here
+  });
+      
   }
   return (
      <div className='register_body'>

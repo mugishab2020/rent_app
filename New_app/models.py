@@ -13,6 +13,7 @@ class User(db.Model):
     role = db.Column(db.String(40), nullable=False)
     orders = db.relationship('Order', backref='User', lazy=True)
     payments = db.relationship('Payment', backref='User', lazy=True)
+    cars = db.relationship("Car", back_populates="user")
 
 
 class Car(db.Model):
@@ -24,7 +25,8 @@ class Car(db.Model):
     rent_status = db.Column(db.Boolean, default=False)
     automatic = db.Column(db.Boolean, unique=True, nullable=False)
     rental_price = db.Column(db.Float, nullable=False)
-    
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user = db.relationship("User", back_populates="cars")  
 
 class Order(db.Model):
     __tablename__ = 'orders'

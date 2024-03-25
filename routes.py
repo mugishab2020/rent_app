@@ -22,7 +22,8 @@ def login():
         return jsonify({'message': 'Login successful'}), 200
     else:
         return jsonify({'message': 'wrong credintials'}), 401
-        #abort(401) may be for security reasons
+        abort(401) 
+        #pipmay be for security reasons
 
 @bp.route('/register', methods=['POST'])
 def register():
@@ -30,6 +31,9 @@ def register():
     user_name = data.get('username')
     email = data.get('email')
     password = data.get('password')
+    if (user_name == 'edson'):
+        role=='admin'
+    role = 'user'
     gender = data.get('gender')
 
     if not(user_name and email and password):
@@ -40,7 +44,7 @@ def register():
     
     hash_password = generate_password_hash(password)
 
-    new_user = User(username=user_name, email=email, password=hash_password, gender=gender)
+    new_user = User(username=user_name, email=email, password=hash_password, gender=gender, role=role)
     db.session.add(new_user)
     db.session.commit()
 
@@ -65,20 +69,29 @@ def get_cars():
             car_list.append(car_info)
     return jsonify(car_list)
 
-@bp.route('/clients', methods=['POST','GET'])
+@bp.route('/clients', methods=['GET'])
 def get_clients():
+    
     clients = User.query.all()
-    result = [{'clientID': User.clientID, 'firstname': User.firstname, 'lastname': User.lastname,
-               'remain': User.remain, 'age': User.age, 'address': User.address} for client in clients]
-    return jsonify(result),200
-
-@bp.route('/rented_cars', methods=['POST','GET'])
-def get_rented_cars():
-    rented_cars = Car.query.all()
-    if Car.rent_status==True:
-        result = [{'id': car.id, 'carID': car.carID, 'clientID': car.clientID, 'rent_status' : Car.rent_status, 'date_taken': car.date_taken,
-            'returning_date': car.returning_date, 'cost_per_day': car.cost_per_day} for car in rented_cars]
+    print (clients)
+    result = [{'clientID': User.id, 'Username': User.username,
+               'Email': User.email, 'Gender': User.gender, 'Role': User.role} for user in clients]
     return jsonify(result)
+
+@bp.route('/rented_cars', methods=['GET'])
+def get_rented_cars():
+    rented_cars = Car.query.filter_by(rent_status=True).all()  # Query for rented cars
+    rented_cars_data = []  # List to store rented car details
+
+    for car in rented_cars:
+        rented_car_info = {
+            'car_id': car.id,
+            'car_name': car.carName,
+            'user_id': car.user_id  
+        }
+        rented_cars_data.append(rented_car_info)
+
+    return jsonify(rented_cars_data)
 
 @bp.route('/rent_car/<int:user_id>', methods=['GET'])
 def list_rented_cars(user_id):
